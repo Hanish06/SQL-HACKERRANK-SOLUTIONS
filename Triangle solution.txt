@@ -1,0 +1,10 @@
+TRIANGLE PROBLEM HACKER RANK
+
+
+Select 
+( case
+ when A+B <=C or B+C <=A or A+C <=B then 'Not A Triangle' 
+ when A=B and B=C and C=A then 'Equilateral'
+ when A<>B and B<>C and C<>A then 'Scalene' 
+ else 'Isosceles' 
+ end) as 'Types' from TRIANGLES;
