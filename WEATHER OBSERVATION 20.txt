@@ -5,3 +5,24 @@ FROM
         COUNT(*) OVER() AS TOTAL
 FROM STATION) AS TABLE1
 WHERE ROW_NUM = CEILING(TOTAL/2)
+
+
+
+--ANOTHER SOLUTION--
+
+WITH Indexed_rows AS (
+SELECT LAT_N,
+ROW_NUMBER() OVER(ORDER BY LAT_N) as row_count,
+COUNT(*) OVER() as total_rows
+FROM STATION
+)
+SELECT
+    CASE
+    WHEN total_rows % 2 = 0 THEN
+    ROUND((Select AVG(LAT_N) from Indexed_rows where row_count=total_rows/2)+
+    (Select AVG(LAT_N) from Indexed_rows where row_count=(total_rows/2)+1),4)/2
+    ELSE
+    ROUND((SELECT LAT_N from Indexed_rows where row_count=(total_rows+1)/2),4)
+END AS Median
+from Indexed_rows
+LIMIT 1
