@@ -1,0 +1,5 @@
+SELECT IF(g.grade>7,s.name,null), g.grade, s.marks
+FROM students s
+INNER JOIN grades g
+on s.marks >= g.min_mark AND s.marks <= g.max_mark
+ORDER BY g.grade DESC, Name ASC, s.marks ASC;
